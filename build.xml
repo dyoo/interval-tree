@@ -1,0 +1,77 @@
+<project name="interval_trees" default="compile" basedir=".">
+
+<property name="src" value="src" />
+
+
+<!-- Load other global properties from local home directory -->
+<!-- For example, it's possible to use jikes globally by setting the
+     build.compiler property to "jikes". -->
+<property file="${user.home}/.ant-global.properties"/>
+<property name="build" value="build" />
+<property name="dist" value="dist" />
+<property name="javadoc" value="javadoc" />
+
+
+<target name="init">
+  <tstamp />
+  <mkdir dir="${build}" />
+  <mkdir dir="${dist}" />
+</target>
+
+
+<!-- empty classpath -->
+<path id="project.classpath">
+  <fileset dir="lib">
+      <include name="**/*.jar"/>
+  </fileset>
+</path>
+
+
+
+<target name="compile" depends="init">
+  <javac srcdir="${src}" destdir="${build}" debug="yes"
+         source="1.4">
+    <classpath refid="project.classpath"/>
+  </javac>
+</target>
+
+
+<target name="jar" depends="compile">
+   <jar destfile="${dist}/org.arabidopsis.interval.jar" basedir="${build}"/>
+</target>
+
+
+<target name="javadoc">
+  <javadoc sourcepath="${src}" destdir="${javadoc}"
+           classpathref="project.classpath"
+           source="1.4">
+      <package name="org.arabidopsis.interval.*"/>
+  </javadoc>
+</target>
+
+
+
+<!-- JUnit testing framework -->
+<target name="junit" depends="compile">
+    <java fork="yes" classname="junit.textui.TestRunner"
+          taskname="junit" failonerror="true">
+
+        <arg value="org.arabidopsis.interval.TestAll"/>
+        <classpath>
+            <fileset dir="lib">
+               <include name="**/*.jar"/>
+            </fileset>
+            <path location="${build}"/>
+        </classpath>
+        <assertions><enable/></assertions>
+    </java>
+</target>
+
+
+
+
+<target name="clean">
+  <delete dir="${build}"/>
+</target>
+
+</project>
