@@ -1,9 +1,9 @@
 package org.arabidopsis.interval;
 
-import junit.framework.TestCase;
-import java.util.List;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.List;
+
+import junit.framework.TestCase;
 
 
 public class TestIntervalTree extends TestCase {
@@ -70,8 +70,8 @@ public class TestIntervalTree extends TestCase {
 
 
 
-    private List searchAllIntervals(int low, int high) {
-	List intervals = tree.searchAll(new Interval(low, high));
+    private List<Interval> searchAllIntervals(int low, int high) {
+	List<Interval> intervals = tree.searchAll(new Interval(low, high));
 	java.util.Collections.sort(intervals);
 	return intervals;
     }
@@ -131,7 +131,7 @@ public class TestIntervalTree extends TestCase {
 
     public void testMultipleSearch() {
 	prepareTestCaseTree();
-	List expected = new ArrayList();
+	final List<Interval> expected = new ArrayList<Interval>();
 	expected.add(new Interval(0, 3));
 	expected.add(new Interval(5, 8));
 	expected.add(new Interval(6, 10));
@@ -141,14 +141,14 @@ public class TestIntervalTree extends TestCase {
 
     public void testUnsuccessfulMultipleSearch() {
 	prepareTestCaseTree();
-	List expected = new ArrayList();
+	final List<Interval> expected = new ArrayList<Interval>();
 	assertEquals(expected, searchAllIntervals(11, 14));
     }
 
 
     public void testSingleMatchWithMultipleSearch() {
 	prepareTestCaseTree();
-	List expected = new ArrayList();
+	final List<Interval> expected = new ArrayList<Interval>();
 	expected.add(new Interval(25, 30));
 	assertEquals(expected, searchAllIntervals(24, 25));
     }
@@ -160,7 +160,7 @@ public class TestIntervalTree extends TestCase {
 	prepareTestCaseTree();
 	prepareTestCaseTree();
 	prepareTestCaseTree();
-	List expected = new ArrayList();
+	final List<Interval> expected = new ArrayList<Interval>();
 	expected.add(new Interval(25, 30));
 	expected.add(new Interval(25, 30));
 	expected.add(new Interval(25, 30));
@@ -171,7 +171,7 @@ public class TestIntervalTree extends TestCase {
 
 
     public void testSearchAllOnWholeResults() {
-	List expected = new ArrayList();
+	List<Interval> expected = new ArrayList<Interval>();
 	int bignumber = 30000;
 	for(int i = 0; i < bignumber; i++) {
 	    tree.insert(new Interval(i, i));
@@ -190,7 +190,7 @@ public class TestIntervalTree extends TestCase {
 		     expected, searchAllIntervals(0, 3*bignumber));
 
 	assertEquals("unexpected unequality", 
-		     new ArrayList(), searchAllIntervals(-1, -1));
+		     new ArrayList<Interval>(), searchAllIntervals(-1, -1));
     }
 
 

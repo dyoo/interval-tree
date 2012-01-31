@@ -1,41 +1,41 @@
 package org.arabidopsis.interval;
 
-import junit.framework.TestCase;
-
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
+import junit.framework.TestCase;
 
 
 public class TestFlankingFinder extends TestCase {
-    private FlankingFinder finder;
+    private FlankingFinder<String> finder;
 
 
     public void setUp() {
-	this.finder = new FlankingFinder();
+	this.finder = new FlankingFinder<String>();
     }
 
 
     public void testEmptyCase() {
-	assertEquals(new ArrayList(),
+	assertEquals(new ArrayList<String>(),
 		     this.finder.flankingLeft(42, 1));
-	assertEquals(new ArrayList(),
+	assertEquals(new ArrayList<String>(),
 		     this.finder.flankingRight(42, 1));
     }
 
 
     public void testNoFinding() {
 	this.finder.add("hello", 10, 20);
-	assertEquals(new ArrayList(),
+	assertEquals(new ArrayList<String>(),
 		     this.finder.flankingLeft(9, 1));
-	assertEquals(new ArrayList(),
+	assertEquals(new ArrayList<String>(),
 		     this.finder.flankingRight(21, 1));
     }
 
 
     public void testSimpleFinding() {
 	this.finder.add("hello", 10, 20);
-	List expected = new ArrayList();
+	List<String> expected = new ArrayList<String>();
 	expected.add("hello");
 	assertEquals(expected,
 		     this.finder.flankingLeft(21, 1));

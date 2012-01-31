@@ -5,12 +5,12 @@ import java.util.WeakHashMap;
 
 
 public class OrderStatisticTree {
-    private RbTree tree;
-    private Map sizes;		// RbNode -> size
-    private OrderStatisticUpdate updater;
+    private final RbTree tree;
+    private final Map<RbNode, Integer> sizes;		// RbNode -> size
+    private final OrderStatisticUpdate updater;
 
     public OrderStatisticTree() {
-	this.sizes = new WeakHashMap();
+	this.sizes = new WeakHashMap<RbNode, Integer>();
 	this.sizes.put(RbNode.NIL, new Integer(0));
 	this.updater = new OrderStatisticUpdate();
 	this.tree = new RbTree(this.updater);
@@ -43,7 +43,7 @@ public class OrderStatisticTree {
     // Returns the size of a node.
     public int size(RbNode node) {
 	assert this.sizes.containsKey(node);
-	return ((Integer) this.sizes.get(node)).intValue();
+	return (this.sizes.get(node)).intValue();
     }
 
     

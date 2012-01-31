@@ -12,13 +12,13 @@ package org.arabidopsis.interval;
  * @see
  */
 
-import junit.runner.TestCollector;
-import junit.runner.LoadingTestCollector;
-import junit.framework.TestSuite;
-import junit.framework.TestCase;
-
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+import junit.runner.LoadingTestCollector;
+import junit.runner.TestCollector;
 
 
 public class TestAll extends TestCase {
@@ -36,9 +36,9 @@ public class TestAll extends TestCase {
     public static TestSuite suite() throws Exception {
         TestSuite suite = new TestSuite();
 
-	List allTestClasses = getAllTestClasses();
+	List<Class<? extends TestCase>> allTestClasses = getAllTestClasses();
 	for(int i = 0 ; i < allTestClasses.size(); i++) {
-	    suite.addTestSuite((Class)allTestClasses.get(i));
+	    suite.addTestSuite(allTestClasses.get(i));
 	}
 
         return suite;
@@ -57,13 +57,14 @@ public class TestAll extends TestCase {
      * @exception
      * @see
      */
-    private static List getAllTestClasses() throws ClassNotFoundException {
-	TestCollector collector = new LoadingTestCollector();
-	java.util.Enumeration e = collector.collectTests();
-	List testClasses = new ArrayList();
+    private static List<Class<? extends TestCase>> getAllTestClasses() throws ClassNotFoundException {
+	final TestCollector collector = new LoadingTestCollector();
+	@SuppressWarnings("unchecked")
+	final java.util.Enumeration<String> e = collector.collectTests();
+	final List<Class<? extends TestCase>> testClasses = new ArrayList<Class<? extends TestCase>>();
 	while (e.hasMoreElements()) {
-	    String className = (String) e.nextElement();
-	    Class c = Class.forName(className);
+	    final String className = e.nextElement();
+	    final Class<? extends TestCase> c = Class.forName(className).asSubclass(TestCase.class);
 	    // don't add ourself
 	    if (isSelfClass(c) || isClassNotInMyPackage(c)) {
 		continue;
@@ -75,14 +76,14 @@ public class TestAll extends TestCase {
 
 
     // Returns true if the given class is ourself.
-    private static boolean isSelfClass(Class c) {
+    private static boolean isSelfClass(Class<?> c) {
 	return c.equals(TestAll.class);
     }
 
 
     // Returns true if the class c is not within the same package
     // hierarchy as ourselves.
-    private static boolean isClassNotInMyPackage(Class c) {
+    private static boolean isClassNotInMyPackage(Class<?> c) {
 	return (! c.getPackage().getName().startsWith
 		(TestAll.class.getPackage().getName()));
     }
