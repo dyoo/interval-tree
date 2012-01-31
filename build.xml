@@ -2,6 +2,9 @@
 
 <property name="src" value="src" />
 
+<property name="test.src" value="test_src" />
+
+
 
 <!-- Load other global properties from local home directory -->
 <!-- For example, it's possible to use jikes globally by setting the
@@ -32,14 +35,17 @@
 
 
 <target name="compile" depends="init">
-  <my.javac srcdir="${src}" destdir="${build}" debug="yes">
+  <my.javac srcdir="${src}:${test.src}" destdir="${build}" debug="yes">
     <classpath refid="project.classpath"/>
   </my.javac>
 </target>
 
 
 <target name="jar" depends="compile">
-   <jar destfile="${dist}/org.arabidopsis.interval.jar" basedir="${build}"/>
+   <jar destfile="${dist}/org.arabidopsis.interval.jar" basedir="${build}">
+		<exclude name="**/*Test.class"/>
+		<exclude name="**/*Tests.class"/>
+   </jar>
 </target>
 
 
@@ -58,7 +64,7 @@
     <java fork="yes" classname="junit.textui.TestRunner"
           taskname="junit" failonerror="true">
 
-        <arg value="org.arabidopsis.interval.TestAll"/>
+        <arg value="org.arabidopsis.interval.AllTests"/>
         <classpath>
             <fileset dir="lib">
                <include name="**/*.jar"/>

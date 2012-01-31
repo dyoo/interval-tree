@@ -6,7 +6,7 @@ import java.util.List;
 import junit.framework.TestCase;
 
 
-public class TestIntervalTree extends TestCase {
+public class IntervalTreeTest extends TestCase {
     private IntervalTree tree;
 
     public void setUp() {

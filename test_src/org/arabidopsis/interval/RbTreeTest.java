@@ -2,7 +2,7 @@ package org.arabidopsis.interval;
 import junit.framework.*;
 
 
-public class TestRbTree extends TestCase {
+public class RbTreeTest extends TestCase {
     private RbTree tree;
 
     public void setUp() {

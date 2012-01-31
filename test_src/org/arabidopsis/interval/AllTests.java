@@ -21,8 +21,8 @@ import junit.runner.LoadingTestCollector;
 import junit.runner.TestCollector;
 
 
-public class TestAll extends TestCase {
-    public TestAll(String name) {
+public class AllTests extends TestCase {
+    public AllTests(String name) {
 	super(name);
     }
 
@@ -77,7 +77,7 @@ public class TestAll extends TestCase {
 
     // Returns true if the given class is ourself.
     private static boolean isSelfClass(Class<?> c) {
-	return c.equals(TestAll.class);
+	return c.equals(AllTests.class);
     }
 
 
@@ -85,7 +85,7 @@ public class TestAll extends TestCase {
     // hierarchy as ourselves.
     private static boolean isClassNotInMyPackage(Class<?> c) {
 	return (! c.getPackage().getName().startsWith
-		(TestAll.class.getPackage().getName()));
+		(AllTests.class.getPackage().getName()));
     }
 
 }

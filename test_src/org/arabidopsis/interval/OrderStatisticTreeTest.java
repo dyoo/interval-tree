@@ -2,7 +2,7 @@ package org.arabidopsis.interval;
 
 import junit.framework.TestCase;
 
-public class TestOrderStatisticTree extends TestCase {
+public class OrderStatisticTreeTest extends TestCase {
 
     public void testNilSize() {
 	OrderStatisticTree tree = new OrderStatisticTree();

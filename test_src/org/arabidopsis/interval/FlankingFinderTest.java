@@ -7,7 +7,7 @@ import java.util.List;
 import junit.framework.TestCase;
 
 
-public class TestFlankingFinder extends TestCase {
+public class FlankingFinderTest extends TestCase {
     private FlankingFinder<String> finder;
 
 
