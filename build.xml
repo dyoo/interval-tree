@@ -27,7 +27,7 @@
 </path>
 
 <presetdef name="my.javac">
-    <javac/>
+    <javac includeantruntime="false" />
 </presetdef>
 
 
