@@ -1,41 +1,47 @@
 package org.arabidopsis.interval;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
 
 
-public class TestFlankingFinder extends TestCase {
-    private FlankingFinder finder;
+public class FlankingFinderTest {
+    private FlankingFinder<String> finder;
 
-
+    @Before
     public void setUp() {
-	this.finder = new FlankingFinder();
+	this.finder = new FlankingFinder<String>();
     }
 
 
+    @Test
     public void testEmptyCase() {
-	assertEquals(new ArrayList(),
+	assertEquals(new ArrayList<String>(),
 		     this.finder.flankingLeft(42, 1));
-	assertEquals(new ArrayList(),
+	assertEquals(new ArrayList<String>(),
 		     this.finder.flankingRight(42, 1));
     }
 
 
+    @Test
     public void testNoFinding() {
 	this.finder.add("hello", 10, 20);
-	assertEquals(new ArrayList(),
+	assertEquals(new ArrayList<String>(),
 		     this.finder.flankingLeft(9, 1));
-	assertEquals(new ArrayList(),
+	assertEquals(new ArrayList<String>(),
 		     this.finder.flankingRight(21, 1));
     }
 
 
+    @Test
     public void testSimpleFinding() {
 	this.finder.add("hello", 10, 20);
-	List expected = new ArrayList();
+	List<String> expected = new ArrayList<String>();
 	expected.add("hello");
 	assertEquals(expected,
 		     this.finder.flankingLeft(21, 1));
@@ -44,6 +50,7 @@ public class TestFlankingFinder extends TestCase {
     }
 
 
+    @Test
     public void testSomeSimpleCases() {
 	this.finder.add("At1g01030.1", 11649, 13611);
 	this.finder.add("At1g01040.1", 23146, 31164);
@@ -75,6 +82,7 @@ public class TestFlankingFinder extends TestCase {
 
 
 
+    @Test
     public void testFlankingLeftWithDuplicates() {
 	int bignumber = 1000;
 	for (int i = 0; i < bignumber; i++) {
@@ -90,6 +98,7 @@ public class TestFlankingFinder extends TestCase {
 
 
 
+    @Test
     public void testFlankingRightWithDuplicates() {
 	int bignumber = 1000;
 	for (int i = 0; i < bignumber; i++) {

@@ -2,6 +2,9 @@
 
 <property name="src" value="src" />
 
+<property name="test.src" value="test_src" />
+
+
 
 <!-- Load other global properties from local home directory -->
 <!-- For example, it's possible to use jikes globally by setting the
@@ -26,18 +29,23 @@
   </fileset>
 </path>
 
+<presetdef name="my.javac">
+    <javac includeantruntime="false" />
+</presetdef>
 
 
 <target name="compile" depends="init">
-  <javac srcdir="${src}" destdir="${build}" debug="yes"
-         source="1.4">
+  <my.javac srcdir="${src}:${test.src}" destdir="${build}" debug="yes">
     <classpath refid="project.classpath"/>
-  </javac>
+  </my.javac>
 </target>
 
 
 <target name="jar" depends="compile">
-   <jar destfile="${dist}/org.arabidopsis.interval.jar" basedir="${build}"/>
+   <jar destfile="${dist}/org.arabidopsis.interval.jar" basedir="${build}">
+		<exclude name="**/*Test.class"/>
+		<exclude name="**/*Tests.class"/>
+   </jar>
 </target>
 
 
@@ -53,18 +61,20 @@
 
 <!-- JUnit testing framework -->
 <target name="junit" depends="compile">
-    <java fork="yes" classname="junit.textui.TestRunner"
-          taskname="junit" failonerror="true">
-
-        <arg value="org.arabidopsis.interval.TestAll"/>
+	<junit printsummary="withOutAndErr" haltonfailure="yes">
         <classpath>
             <fileset dir="lib">
                <include name="**/*.jar"/>
             </fileset>
             <path location="${build}"/>
+            <path location="."/>
         </classpath>
-        <assertions><enable/></assertions>
-    </java>
+        <batchtest fork="yes">
+                <fileset dir="${test.src}">
+                        <include name="**/*Test*.java"/>
+                </fileset>
+        </batchtest>
+	</junit>
 </target>
 
 

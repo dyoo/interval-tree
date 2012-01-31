@@ -5,21 +5,22 @@ package org.arabidopsis.interval;
  */
 
 
-import java.util.WeakHashMap;
-import java.util.Map;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.WeakHashMap;
+
 import org.apache.log4j.Logger;
 
 public class IntervalTree {
-    private StatisticUpdate updater;
-    private RbTree tree;
+    private final StatisticUpdate updater;
+    private final RbTree tree;
 
-    private Map intervals;
-    private Map max;
-    private Map min;
+	private final Map<RbNode, Interval> intervals;
+	private final Map<RbNode, Integer> max;
+	private final Map<RbNode, Integer> min;
 
-    private Logger logger;
+    private final Logger logger;
 
 
     public IntervalTree() {
@@ -28,12 +29,12 @@ public class IntervalTree {
 
 	this.logger = Logger.getLogger(this.getClass());
 
-	this.intervals = new WeakHashMap();
+	this.intervals = new WeakHashMap<RbNode, Interval>();
 	this.intervals.put(RbNode.NIL, null);
 
-	this.max = new WeakHashMap();
+	this.max = new WeakHashMap<RbNode, Integer>();
 	this.max.put(RbNode.NIL, new Integer(Integer.MIN_VALUE));
-	this.min = new WeakHashMap();
+	this.min = new WeakHashMap<RbNode, Integer>();
 	this.min.put(RbNode.NIL, new Integer(Integer.MAX_VALUE));
     }
 
@@ -93,22 +94,22 @@ public class IntervalTree {
 
 
     // Returns all matches as a list of Intervals
-    public List searchAll(Interval interval) {
+    public List<Interval> searchAll(Interval interval) {
 	logger.debug("Starting search for " + interval);
 
 	if (tree.root().isNull()) {
-	    return new ArrayList();
+	    return new ArrayList<Interval>();
 	}
 	return this._searchAll(interval, tree.root());
     }
 
 
-    private List _searchAll(Interval interval, RbNode node) {
+    private List<Interval> _searchAll(Interval interval, RbNode node) {
 	assert (! node.isNull());
 
 	logger.debug("Looking at " + getInterval(node));
 
-	List results = new ArrayList();
+	List<Interval> results = new ArrayList<Interval>();
 	if (getInterval(node).overlaps(interval)) {
 	    results.add(getInterval(node));
 	    logger.debug("match");
@@ -136,7 +137,7 @@ public class IntervalTree {
 
 	assert (this.intervals.containsKey(node));
 
-	return (Interval) this.intervals.get(node);
+	return this.intervals.get(node);
     }
 
 
@@ -144,7 +145,7 @@ public class IntervalTree {
 	assert (node != null);
 	assert (this.intervals.containsKey(node));
 
-	return ((Integer) this.max.get(node)).intValue();
+	return (this.max.get(node)).intValue();
     }
 
 
@@ -157,7 +158,7 @@ public class IntervalTree {
 	assert (node != null);
 	assert (this.intervals.containsKey(node));
 
-	return ((Integer) this.min.get(node)).intValue();
+	return (this.min.get(node)).intValue();
     }
 
 

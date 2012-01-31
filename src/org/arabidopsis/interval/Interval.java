@@ -1,7 +1,7 @@
 package org.arabidopsis.interval;
 
 // Quick and dirty interval class
-public class Interval implements Comparable {
+public class Interval implements Comparable<Interval> {
     private final int low;
     private final int high;
 
@@ -29,8 +29,7 @@ public class Interval implements Comparable {
     }
 
 
-    public int compareTo(Object o) {
-	Interval other = (Interval) o;
+    public int compareTo(final Interval other) {
 	if (this.low < other.low)
 	    return -1;
 	if (this.low > other.low)

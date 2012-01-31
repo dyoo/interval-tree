@@ -1,25 +1,35 @@
 package org.arabidopsis.interval;
-import junit.framework.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 
-public class TestRbTree extends TestCase {
+public class RbTreeTest {
     private RbTree tree;
 
+    @Before
     public void setUp() {
 	this.tree = new RbTree();
     }
 
 
+    @After
     public void tearDown() {
 	this.tree = null;
     }
 
 
+    @Test
     public void testEmptyTreeIsValid() {
 	assertTrue(this.tree.isValid());
     }
 
 
+    @Test
     public void testTreeWithSingleNodeIsValid() {
 	this.tree.insert(new RbNode(5));
 	assertTrue(this.tree.isValid());
@@ -27,6 +37,7 @@ public class TestRbTree extends TestCase {
 
 
 
+    @Test
     public void testTreeWithRootColorDamageIsntValid() {
 	this.tree.insert(new RbNode(5));
 	RbNode node = this.tree.get(5);
@@ -45,6 +56,7 @@ public class TestRbTree extends TestCase {
     }
 
 
+    @Test
     public void testDamageCanBeDetected() {
 	for (int i = 0; i < 8; i++) {
 	    tree.insert(new RbNode(i));
@@ -59,6 +71,7 @@ public class TestRbTree extends TestCase {
 
 
 
+    @Test
     public void testConstruction() {
 	RbNode n1 = new RbNode(42);
 	RbNode n2 = new RbNode(43);
@@ -72,6 +85,7 @@ public class TestRbTree extends TestCase {
     }
 
 
+    @Test
     public void testEmpty() {
 	assertTrue(tree.root().isNull());
 	assertTrue(tree.get(42).isNull());
@@ -86,6 +100,7 @@ public class TestRbTree extends TestCase {
 
 
 
+    @Test
     public void testTreeInsert() {
 	RbNode n1, n2, n3;
 	n1 = new RbNode(1);
@@ -104,6 +119,7 @@ public class TestRbTree extends TestCase {
     }
 
 
+    @Test
     public void testRotationLeft() {
 	RbNode n1, n2, n3;
 	n1 = new RbNode(1);
@@ -120,6 +136,7 @@ public class TestRbTree extends TestCase {
     }
 
 
+    @Test
     public void testRotationAgain() {
 	for (int i = 0; i < 10; i++) {
 	    tree.treeInsert(new RbNode(i));
@@ -150,6 +167,7 @@ public class TestRbTree extends TestCase {
     }
 
 
+    @Test
     public void testSuccessorTraversal() {
 	int BIGNUMBER = 1000;
 	for (int i = 0; i < BIGNUMBER; i++) {
@@ -167,6 +185,7 @@ public class TestRbTree extends TestCase {
     }
 
 
+    @Test
     public void testPredecessorTraversal() {
 	int BIGNUMBER = 1000;
 	for (int i = 0; i < BIGNUMBER; i++) {
@@ -183,6 +202,7 @@ public class TestRbTree extends TestCase {
     }
 
 
+    @Test
     public void testNullPredecessor() {
 	int BIGNUMBER = 1000;
 	for (int i = 0; i < BIGNUMBER; i++) {
@@ -195,6 +215,7 @@ public class TestRbTree extends TestCase {
     }
 
 
+    @Test
     public void testNullSuccessor() {
 	int BIGNUMBER = 1000;
 	for (int i = 0; i < BIGNUMBER; i++) {
@@ -207,6 +228,7 @@ public class TestRbTree extends TestCase {
     }
 
 
+    @Test
     public void testRotationRight() {
 	RbNode n1, n2, n3;
 	n1 = new RbNode(1);
@@ -224,6 +246,7 @@ public class TestRbTree extends TestCase {
 
 
 
+    @Test
     public void testSizeUpTo100() {
 	for (int n = 1; n <= 100; n++) {
 	    setUp();
@@ -235,6 +258,7 @@ public class TestRbTree extends TestCase {
     }
 
 
+    @Test
     public void testSizeUpTo100WithDuplicates() {
 	for (int n = 1; n <= 100; n++) {
 	    setUp();

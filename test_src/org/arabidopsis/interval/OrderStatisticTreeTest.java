@@ -1,15 +1,19 @@
 package org.arabidopsis.interval;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class TestOrderStatisticTree extends TestCase {
+import org.junit.Test;
 
+public class OrderStatisticTreeTest {
+
+    @Test
     public void testNilSize() {
 	OrderStatisticTree tree = new OrderStatisticTree();
 	assertEquals(0, tree.size(RbNode.NIL));
     }
 
 
+    @Test
     public void testSingleElement() {
 	OrderStatisticTree tree = new OrderStatisticTree();
 	RbNode node = new RbNode(3);
@@ -20,6 +24,7 @@ public class TestOrderStatisticTree extends TestCase {
     }
 
 
+    @Test
     public void testAFewElements() {
 	OrderStatisticTree tree = new OrderStatisticTree();
 	RbNode two = new RbNode(2);
@@ -37,6 +42,7 @@ public class TestOrderStatisticTree extends TestCase {
 	assertEquals(eight, tree.select(4));
     }
 
+    @Test
     public void testBulkCase() {
 	int BIG = 10000;
 	OrderStatisticTree tree = new OrderStatisticTree();
@@ -48,6 +54,7 @@ public class TestOrderStatisticTree extends TestCase {
     }
 
 
+    @Test
     public void testBulkCaseWithGaps() {
 	int BIG = 20000;
 	OrderStatisticTree tree = new OrderStatisticTree();
