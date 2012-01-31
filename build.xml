@@ -26,13 +26,15 @@
   </fileset>
 </path>
 
+<presetdef name="my.javac">
+    <javac/>
+</presetdef>
 
 
 <target name="compile" depends="init">
-  <javac srcdir="${src}" destdir="${build}" debug="yes"
-         source="1.4">
+  <my.javac srcdir="${src}" destdir="${build}" debug="yes">
     <classpath refid="project.classpath"/>
-  </javac>
+  </my.javac>
 </target>
 
 
