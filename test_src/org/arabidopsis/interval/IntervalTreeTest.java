@@ -1,63 +1,78 @@
 package org.arabidopsis.interval;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 
-public class IntervalTreeTest extends TestCase {
+public class IntervalTreeTest {
     private IntervalTree tree;
 
+    @Before
     public void setUp() {
 	this.tree = new IntervalTree();
     }
 
+    @After
     public void tearDown() {
 	this.tree = null;
     }
 
 
+    @Test
     public void testEmptyCase() {
 	assertEquals(null, this.tree.search(new Interval(0, 42)));
     }
 
 
+    @Test
     public void testSimpleOverlapCaseOnEqual() {
 	tree.insert(new Interval(1, 5));
 	assertEquals(new Interval(1, 5), this.searchInterval(1, 5));
     }
 
 
+    @Test
     public void testSimpleOverlapCaseOnLeft() {
 	tree.insert(new Interval(1, 5));
 	assertEquals(new Interval(1, 5), this.searchInterval(0, 3));
     }
 
 
+    @Test
     public void testSimpleOverlapCaseOnRight() {
 	tree.insert(new Interval(1, 5));
 	assertEquals(new Interval(1, 5), this.searchInterval(3, 6));
     }
 
+    @Test
     public void testSimpleOverlapCaseOnEnclosed() {
 	tree.insert(new Interval(1, 5));
 	assertEquals(new Interval(1, 5), this.searchInterval(2, 3));
     }
 
 
+    @Test
     public void testSimpleOverlapCaseOnSurrounding() {
 	tree.insert(new Interval(1, 5));
 	assertEquals(new Interval(1, 5), this.searchInterval(0, 6));
     }
 
 
+    @Test
     public void testSimpleUnsuccessfulMatchOnRight() {
 	tree.insert(new Interval(1, 5));
 	assertEquals(null, this.searchInterval(6, 10));
     }
 
 
+    @Test
     public void testSimpleUnsuccessfulMatchOnLeft() {
 	tree.insert(new Interval(2, 5));
 	assertEquals(null, this.searchInterval(0, 1));
@@ -97,6 +112,7 @@ public class IntervalTreeTest extends TestCase {
     // Just a quick function to make sure that the checkValidity
     // function is up and running.  isValid() should ALWAYS be true,
     // unless I screwed up with the implementation somehow.
+    @Test
     public void testValidityOfTestCaseTree() {
 	assertTrue(tree.isValid());
 	prepareTestCaseTree();
@@ -106,6 +122,7 @@ public class IntervalTreeTest extends TestCase {
 
 
     // check to see that duplicate intervals work out ok structurally.
+    @Test
     public void testExpectedSizeWithDuplicates() {
 	prepareTestCaseTree();
 	int n = tree.size();
@@ -120,6 +137,7 @@ public class IntervalTreeTest extends TestCase {
 
 
 
+    @Test
     public void testWithPreparedTree() {
 	prepareTestCaseTree();
 	assertEquals(new Interval(0, 3), searchInterval(-1, 4));
@@ -129,6 +147,7 @@ public class IntervalTreeTest extends TestCase {
     }
 
 
+    @Test
     public void testMultipleSearch() {
 	prepareTestCaseTree();
 	final List<Interval> expected = new ArrayList<Interval>();
@@ -139,6 +158,7 @@ public class IntervalTreeTest extends TestCase {
     }
 
 
+    @Test
     public void testUnsuccessfulMultipleSearch() {
 	prepareTestCaseTree();
 	final List<Interval> expected = new ArrayList<Interval>();
@@ -146,6 +166,7 @@ public class IntervalTreeTest extends TestCase {
     }
 
 
+    @Test
     public void testSingleMatchWithMultipleSearch() {
 	prepareTestCaseTree();
 	final List<Interval> expected = new ArrayList<Interval>();
@@ -156,6 +177,7 @@ public class IntervalTreeTest extends TestCase {
 
 
     // If we double up each interval, we expect to see the same elements
+    @Test
     public void testSingleMatchWithMultipleSearchAndDuplicates() {
 	prepareTestCaseTree();
 	prepareTestCaseTree();
@@ -170,6 +192,7 @@ public class IntervalTreeTest extends TestCase {
 
 
 
+    @Test
     public void testSearchAllOnWholeResults() {
 	List<Interval> expected = new ArrayList<Interval>();
 	int bignumber = 30000;
@@ -195,6 +218,7 @@ public class IntervalTreeTest extends TestCase {
 
 
 
+    @Test
     public void testWithLotsOfOverlapping() {
 	int bignumber = 1000;
 	for(int i = 0; i < bignumber; i++) {

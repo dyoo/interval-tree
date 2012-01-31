@@ -61,18 +61,20 @@
 
 <!-- JUnit testing framework -->
 <target name="junit" depends="compile">
-    <java fork="yes" classname="junit.textui.TestRunner"
-          taskname="junit" failonerror="true">
-
-        <arg value="org.arabidopsis.interval.AllTests"/>
+	<junit printsummary="withOutAndErr" haltonfailure="yes">
         <classpath>
             <fileset dir="lib">
                <include name="**/*.jar"/>
             </fileset>
             <path location="${build}"/>
+            <path location="."/>
         </classpath>
-        <assertions><enable/></assertions>
-    </java>
+        <batchtest fork="yes">
+                <fileset dir="${test.src}">
+                        <include name="**/*Test*.java"/>
+                </fileset>
+        </batchtest>
+	</junit>
 </target>
 
 

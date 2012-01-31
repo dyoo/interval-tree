@@ -1,21 +1,25 @@
 package org.arabidopsis.interval;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 
-public class FlankingFinderTest extends TestCase {
+public class FlankingFinderTest {
     private FlankingFinder<String> finder;
 
-
+    @Before
     public void setUp() {
 	this.finder = new FlankingFinder<String>();
     }
 
 
+    @Test
     public void testEmptyCase() {
 	assertEquals(new ArrayList<String>(),
 		     this.finder.flankingLeft(42, 1));
@@ -24,6 +28,7 @@ public class FlankingFinderTest extends TestCase {
     }
 
 
+    @Test
     public void testNoFinding() {
 	this.finder.add("hello", 10, 20);
 	assertEquals(new ArrayList<String>(),
@@ -33,6 +38,7 @@ public class FlankingFinderTest extends TestCase {
     }
 
 
+    @Test
     public void testSimpleFinding() {
 	this.finder.add("hello", 10, 20);
 	List<String> expected = new ArrayList<String>();
@@ -44,6 +50,7 @@ public class FlankingFinderTest extends TestCase {
     }
 
 
+    @Test
     public void testSomeSimpleCases() {
 	this.finder.add("At1g01030.1", 11649, 13611);
 	this.finder.add("At1g01040.1", 23146, 31164);
@@ -75,6 +82,7 @@ public class FlankingFinderTest extends TestCase {
 
 
 
+    @Test
     public void testFlankingLeftWithDuplicates() {
 	int bignumber = 1000;
 	for (int i = 0; i < bignumber; i++) {
@@ -90,6 +98,7 @@ public class FlankingFinderTest extends TestCase {
 
 
 
+    @Test
     public void testFlankingRightWithDuplicates() {
 	int bignumber = 1000;
 	for (int i = 0; i < bignumber; i++) {
